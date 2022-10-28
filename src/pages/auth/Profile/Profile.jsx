@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   logoutAction,
   updateUserInfoAction,
+  updateUserInfoActionFailed,
 } from "../../../stores/slices/user.slice";
 import { useNavigate } from "react-router-dom";
 
@@ -43,6 +44,11 @@ export default function Profile() {
     navigate(`/profile`);
   };
 
+  const onFinishFailed =  (error) =>{
+    dispatch(updateUserInfoActionFailed(error))
+    navigate(`/profile`);
+  }
+
   return (
     <>
       <div className="profile__member">
@@ -53,13 +59,16 @@ export default function Profile() {
               {...layout}
               name="nest-messages"
               onFinish={onFinish}
-              onFinishFailed={() => {}}
+              onFinishFailed={onFinishFailed}
             >
               <Form.Item
+                required
                 name={["name"]}
                 label="Name"
                 rules={[
                   {
+                    require: true,
+                    message:"Vui lòng không được để trống",
                     type: "name",
                   },
                 ]}
@@ -71,10 +80,12 @@ export default function Profile() {
                 />
               </Form.Item>
               <Form.Item
+              
                 label="Email"
                 rules={[
                   {
                     type: "email",
+                
                   },
                 ]}
               >
@@ -91,6 +102,8 @@ export default function Profile() {
                 rules={[
                   {
                     type: "text",
+                    require: true,
+                    message:"Vui lòng không được để trống",
                   },
                 ]}
               >
@@ -101,9 +114,15 @@ export default function Profile() {
                   onChange={(e) => setPhoneInput(e.target.value)}
                 />
               </Form.Item>
-              <Form.Item name={["address"]} label="Địa chỉ">
+              <Form.Item name={["address"]} label="Địa chỉ" rules={[
+                {
+                  require: true,
+                  message: "Vui lòng không được để trống",
+                }
+              ]}>
                 <Input
                   style={{ width: "400px" }}
+              
                   placeholder={addressInput}
                   onChange={(e) => setAddressInput(e.target.value)}
                 />

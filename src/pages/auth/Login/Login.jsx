@@ -30,7 +30,7 @@ export default function Login() {
     const {
         register,
         handleSubmit,
-        control,
+        controler,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
@@ -63,7 +63,7 @@ export default function Login() {
                     autoComplete="off"
                 >
                     <Controller
-                        control={control}
+                        control={controler}
                         name='email'
                         render={({ field: { onChange, value, name, ref } }) => (
                             <Form.Item
@@ -90,7 +90,7 @@ export default function Login() {
                         )}
                     />
                     <Controller
-                        control={control}
+                        control={controler}
                         name='password'
                         render={({ field: { onChange, value, name, ref } }) => (
                             <Form.Item

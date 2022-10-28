@@ -23,6 +23,7 @@ const productSlice = createSlice({
 	name: 'product',
 	initialState,
 	reducers: {
+        
 		fetchProductAction: (state, action) => {
             const page = action.payload
             state.productState = {

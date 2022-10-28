@@ -15,16 +15,16 @@ export default function HomePage() {
 			<div className="banner">
 				<Carousel autoplay>
 					<div>
-					<img src={Banner1} alt="" style={{height: 300}} />
+					<img src={Banner1} alt="" style={{height: 500, objectPosition: 'center', objectFit: 'cover'}} />
 					</div>
 					<div>
-					<img src={Banner2} alt="" style={{height: 300}}/>
+					<img src={Banner2} alt="" style={{height: 500, objectPosition: 'center', objectFit: 'cover'}}/>
 					</div>
 					<div>
-					<img src={Banner3} alt="" style={{height: 300}}/>
+					<img src={Banner3} alt="" style={{height: 500, objectPosition: 'center', objectFit: 'cover'}}/>
 					</div>
 					<div>
-					<img src={Banner4} alt="" style={{height: 300}}/>
+					<img src={Banner4} alt="" style={{height: 500, objectPosition: 'center', objectFit: 'cover'}}/>
 					</div>
 				</Carousel>
 			</div>

@@ -5,7 +5,7 @@ header{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #FEB139;
+	background-color: lightskyblue;
 	height: 100px;
 }
 .logo{
@@ -23,8 +23,8 @@ header{
 	height: 49px;
 }
 .nav__links .active li{
-	color: #EF5B0C;
-	border-bottom: 2px solid #EF5B0C;
+	color: lightskyblue;
+	border-bottom: 2px solid lightskyblue;
 }
 .nav__links li{
 	font-size: 18px;
@@ -34,7 +34,7 @@ header{
 	margin: 0 20px;
 }
 .nav__links li:hover{
-	border-bottom: 2px solid #EF5B0C;
+	border-bottom: 2px solid lightskyblue;
 	transition: all 0.1s ease 0s;
 }
 .category{
@@ -46,7 +46,7 @@ header{
 	border-radius: 20px;
 }
 .icons{
-	margin-right: 59px;
+	margin-right: 40px;
 }
 .login{
 	font-size: 35px;

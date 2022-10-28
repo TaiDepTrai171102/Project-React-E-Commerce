@@ -11,9 +11,9 @@ import NavBar from '../../components/layouts/NavbarUser-Layout/components/NavBar
 const ButtonGroup = Button.Group;
 
 const listSize = [
-    { label: 'Nhỏ', price: 0 },
-    { label: 'Vừa', price: 6 },
-    { label: 'Lớn', price: 10 },
+    { label: '10cm', price: 0 },
+    { label: '12cm', price: 60 },
+    { label: '15cm', price: 100 },
 ]
 
 export default function DetailProduct() {
@@ -29,6 +29,11 @@ export default function DetailProduct() {
     const description = location.state.description
     const total = price * count + value.price * count
     const type = location.state.type
+
+
+
+    
+
 
     const increase = () => {
         setCount(count + 1);

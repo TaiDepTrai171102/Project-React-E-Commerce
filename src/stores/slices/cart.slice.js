@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { notification } from 'antd';
 
 export const ORDER_LIMIT = 7;
-
+const localstoreCart = localStorage.getItem('cart',)
 const initialState = {
 	cartState: {
 		cancelled: '',
@@ -21,6 +21,8 @@ const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		addToCartAction: (state, action) => {
+		
+
 			const cartItem = {...action.payload}
 			state.cartState.cart.push(cartItem)
 		},

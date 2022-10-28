@@ -31,6 +31,7 @@ const schema = yup
       .required("Require password")
       .oneOf([yup.ref("password")], "Mật khẩu chưa khớp"),
   })
+  
   .required();
 
 export default function Register() {
@@ -54,6 +55,7 @@ export default function Register() {
   });
 
   useEffect(() => {
+    console.log('useEffect has been called')
     register("email", { required: true });
     register("password", { required: true });
     register("confirmPassword", { required: true });

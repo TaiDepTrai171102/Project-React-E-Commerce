@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductAction, PRODUCT_LIMIT } from '../../../stores/slices/product.slice';
 import { Pagination } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
-
+import newicon from '../../../assets/new-board-icon.svg';
 export default function ListProduct() {
 	const productState = useSelector(state => state.product.productState)
 	const dispatch = useDispatch()
@@ -28,28 +28,37 @@ export default function ListProduct() {
 		setSearchParams({ page, limit });
 	}
 
-	const handleCoffeeDetail = (item) => {
+	const handleDetail = (item) => {
 		navigate(`/product-detail/${item.id}`, { state: { ...item } })
 	}
 
 	return (
 		<>
-			<h2 className='title__product'>Sản phẩm</h2>
+			<h2 className='title__product'>NHỮNG SẢN PHẨM MỚI NHẤT THỊ TRƯỜNG</h2>
 			<div className='list__product'>
-				{productState?.data?.map?.((item, index) => (
-					<div onClick={() => handleCoffeeDetail(item)} key={index} className="item">
+				{productState?.data?.map?.((item) => (
+					<div onClick={() => handleDetail(item)}  className="item">
 						<img src={item.image} alt="" />
 						<p>{item.productName}</p>
 						<span>{item.price}.000đ</span>
-						<button>+</button>
+						<img src={newicon} style={{width: 50, height: 50 , position: 'relative', top: -10, left: 40}}/> 
+			
 					</div>
 				))}
 			</div>
-			<div className="loading">
-				{loading && (<LoadingOutlined />)}
-			</div>
-			<div className="pagination">
-				<Pagination onChange={onPaginationChange} pageSize={+_limit} current={+_page} total={total} />
+		
+			<button className='button' style={{color: 'white',borderRadius: 20, padding: 10}}>Xem Tất Cả </button>
+			<h2 className='title__product'>NHỮNG SẢN PHẨM DRAGON BALL</h2>
+			<div className='list__product'>
+				{productState?.data?.map?.((item) => (
+					<div onClick={() => handleDetail(item)}  className="item">
+						<img src={item.image} alt="" />
+						<p>{item.productName}</p>
+						<span>{item.price}.000đ</span>
+						
+			
+					</div>
+				))}
 			</div>
 		</>
 	)

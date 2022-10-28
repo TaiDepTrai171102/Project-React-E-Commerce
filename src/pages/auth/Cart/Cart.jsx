@@ -9,6 +9,9 @@ import {
   paymentAction,
   removeCartAction,
 } from "../../../stores/slices/cart.slice";
+import {
+  fetchProductAction,
+} from "../../../stores/slices/product.slice"
 import { v4 } from "uuid";
 import EmptyComp from "./Empty/Empty";
 import NoUser from "./Empty/NoUser";
@@ -16,12 +19,18 @@ import NoUser from "./Empty/NoUser";
 export default function Cart() {
   const userInfo = useSelector((state) => state.user.userInfoState);
   const cartState = useSelector((state) => state.cart.cartState);
+  
+
+  // const arr = cả
+  const arr = useSelector((state) => state.product.productState)
+
 
   const userName = userInfo?.data?.name;
   const phone = userInfo?.data?.phone;
   const address = userInfo?.data?.address;
   const totalBill = cartState.totalBill;
   const listCartItem = cartState?.cart;
+  console.log(listCartItem);
   const idUser = userInfo?.data?.id;
   const current = new Date();
   const date = `${current.getDate()}/${
@@ -37,9 +46,14 @@ export default function Cart() {
     status: "Chờ xác nhận",
   });
 
+ 
+  console.log(arr);
   useEffect(() => {
     dispatch(getTotalBill());
   }, [listCartItem]);
+
+
+  
 
   const handleDeleteItem = (id) => {
     dispatch(deleteCartItemAction(id));
@@ -82,6 +96,7 @@ export default function Cart() {
             <h2>Giao hàng</h2>
             <input
               type="text"
+              disabled
               value={infoOrder?.name}
               onChange={(e) =>
                 setInfoOrder({
@@ -92,6 +107,7 @@ export default function Cart() {
             />
             <input
               type="number"
+              disabled
               value={infoOrder?.phone}
               onChange={(e) =>
                 setInfoOrder({
@@ -102,6 +118,7 @@ export default function Cart() {
             />
             <input
               type="text"
+              disabled
               value={infoOrder?.address}
               onChange={(e) =>
                 setInfoOrder({
@@ -112,7 +129,7 @@ export default function Cart() {
             />
           </div>
           <div className="order__product">
-            <h2>Sản phẩm đả chọn</h2>
+            <h2>Sản phẩm đã chọn</h2>
             {listCartItem?.map?.((item) => {
               return (
                 <div key={item.id} className="select__product">

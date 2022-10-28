@@ -1,11 +1,11 @@
 export const category = [
 	{
-		title: 'Coffee',
-		path: '/coffee',
+		title: 'Hiem',
+		path: '/hanghiem',
 	},
 	{
-		title: 'Other',
-		path: '/other-category'
+		title: 'Cuc hiem',
+		path: '/hangcuchiem'
 	}
 ]
 

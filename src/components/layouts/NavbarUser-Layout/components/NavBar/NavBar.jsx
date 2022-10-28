@@ -54,11 +54,13 @@ const urlDashboard = (
       }}
     >
         <NavLink to={'/dashboard'}  style={{
-                fontSize: "20px",
+                fontSize: "18px",
                 color: "black",
                 padding: '7px 10px',
                 background: '#fff',
-                borderRadius: '30px'
+                borderRadius: '30px',
+                position: 'relative',
+                top:'3px'
               }}>
             <DashboardOutlined 
               
