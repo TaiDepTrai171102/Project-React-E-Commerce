@@ -1,47 +1,49 @@
-import React, { useEffect, useState } from "react";
-import './style.css';
-import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import React, { useEffect , useState } from "react";
+import './style.scss';
+import {  useNavigate, useSearchParams , Link} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 import { deleteProductAction, fetchProductAction, PRODUCT_LIMIT } from "../../../../../stores/slices/admin.product.slice";
-import { message, notification, Pagination } from "antd";
-
+import {  Pagination , notification  } from "antd";
+import axios from "axios";
 function AllProducts() {
+
+    const [valuesearch,setValue] = useState("");
+  
+    const handleSubmit = async (e) =>{
+      e.preventDefalt();
+      return await axios.get(`http://localhost:3300/api/products?q=${valuesearch}`)
+      .then((reponse) => 
+      {
+        listProduct(reponse.data);
+        setValue("");
+      })
+      .catch((eer) => console.log(eer))
+    }
     const listProduct = useSelector(state => state.adminProduct.productState)
     let [searchParams, setSearchParams] = useSearchParams();
-    const [showDetail, setShowDetail] = useState(false);
-    const [detailItem, setDetailItem] = useState(null);
+
     const dispatch = useDispatch();
-    const data =listProduct.data;
+
     const defaultPage = 1;
     const _page = searchParams.get('page') ?? `${defaultPage}`;
     const _limit = searchParams.get('limit') ?? `${PRODUCT_LIMIT}`;
-
-    const page = listProduct.pagination.page;
     const total = listProduct.pagination.total;
-    const loading = listProduct.loading;
+  
 
     useEffect(() => {
         dispatch(fetchProductAction({ page: _page ? _page : 1, limit: _limit }));
     }, [dispatch, _page, _limit, total])
 
 
-    const handleDetailItem = (product) => {
-        setDetailItem(product);
-        console.log("detail", detailItem)
-        setShowDetail(!showDetail);
-    }
+   
 
-    const handleDeleteDetailItem = () => {
-        setShowDetail(!showDetail);
-    }
-
-    const handleDeleteProduct = () => {
-        dispatch(deleteProductAction(detailItem.id));
-        setShowDetail(!showDetail)
+    const handleDeleteProduct = (id) => {
+        dispatch(deleteProductAction(id));
         notification.success({
             message: 'Xóa thành công!'
         })
+      
     }
     const navigate = useNavigate();
     const gotoDetail = (item) => {
@@ -53,42 +55,52 @@ function AllProducts() {
         
     }
     return (
-        <div className="all-product">
-            <div >
-                
-                <>
+        <div>
+            <div className="datatableTitle">
+                Add New Product
 
-                {loading && <div style={{textAlign:'center'}}><LoadingOutlined /></div>}
-                    {listProduct?.data?.map?.((item) => {
-                        return (
-                            <div >
-                                <div className="product-item" key={item.productName} onClick={() => handleDetailItem(item)}>
-                                    <img src={item.image} alt={item.productName} /><br />
-                                    <p>{item.productName}</p>
-                                    <p>{item.price}.000đ</p>
-                                </div>
-
-                            </div>
-
-                        )
-                    })}
-                </>
-                <>
-                    {showDetail && <div className="detail-item">
-                        <img src={detailItem?.image} alt="" />
-                        <div className="detail-infor">
-                            <p className="back" onClick={handleDeleteDetailItem}>X</p>
-                            <h3 className="name-detail">{detailItem?.productName}</h3>
-                            <h3 className="price-detail">{detailItem?.price}.000đ</h3>
-                            <p className="des-detail">{detailItem?.description}</p>
-                            <button onClick={handleDeleteProduct}>Delete</button><br></br>
-                            <button onClick={() => gotoDetail(detailItem)}>Edit</button>
-                        </div>
-                    </div>}
-                </>
+                <form action="" onSubmit={handleSubmit}>
+                    <input  type="text"
+                            placeholder="Search..."
+                             onChange={(e) => setValue(e.target.value)}
+                            value={valuesearch}
+                    />
+                    <button>Search</button>
+                </form>     
+            <Link to="/admin/products/add-product" className="link">
+                Add New
+            </Link>
+        </div>
+        <div className="container1">
+        
+        <div className="table">
+            <div className="table-header">
+                <div className="header__item" style={{ color: "white" , position:"relative" , right:"-5px" }}>Id</div>
+                <div className="header__item" style={{ color: "white", position:"relative", right:"-15px" }}>Name</div>
+                <div className="header__item" style={{ color: "white", position:"relative", right:"-30px"}}>Price</div>
+                <div className="header__item" style={{ color: "white" ,  position:"relative", right:"-40px"}}>Type</div>
+                <div className="header__item" style={{ color: "white" ,  position:"relative", right:"-50px"}}>Image</div>
+                <div className="header__item" style={{ color: "white", position:"relative", right:"-25px" }}>Action</div>
             </div>
-            <div className="pagination" style={{ marginLeft: '35%' }}>
-                <Pagination
+            {listProduct?.data?.map?.((item,index) => {
+                  return (
+                    <div className="table-content">	
+                        <div className="table-row" key={index.productName}>		
+                            <div className="table-data">{item.id+1}</div>
+                            <div className="table-data">{item.productName}</div>
+                            <div className="table-data">{item.price}.000d</div>
+                            <div className="table-data">{item.type}</div>
+                            <div className="table-data"><img src={item.image} alt="" width="100px" height="100px" /></div>
+                            <button onClick={() => handleDeleteProduct(item.id)}>Delete</button>
+                            <button onClick={() => gotoDetail(item)}  style={{ marginLeft:"30px",padding:"10px"}}>Edit</button>
+
+                        </div>
+                    </div>	
+                )
+            })}
+            
+            <div className="pagination" style={{position: "relative",top:"-10px"}}>
+            <Pagination
                     showSizeChanger
                     pageSize={+ _limit}
                     total={total}
@@ -96,7 +108,10 @@ function AllProducts() {
                     onChange={onchangePagination}
                 />
             </div>
+           
+          </div>
         </div>
+      </div>
     );
 }
 

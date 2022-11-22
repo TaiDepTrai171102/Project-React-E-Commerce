@@ -1,0 +1,109 @@
+
+
+@import url(https://fonts.googleapis.com/css?family=Merriweather);
+$red: lightblue;
+
+
+
+.list {
+    display: flex;
+    width: 100%;
+  
+    .listcontainer {
+      flex: 6;
+
+
+      html, body {
+        background: #f1f1f1;
+        font-family: 'Merriweather', sans-serif;
+        padding: 1em;
+      }
+      
+      h1 {
+         text-align: center;
+         color: #a8a8a8;
+        text-shadow: (1px 1px 0 rgba(white , 1));
+      }
+      
+      form {
+         max-width: 600px;
+         text-align: center;
+         margin: 20px auto;
+        
+        input, textarea, button , select  {
+           
+           padding: 1em;
+           border-radius: 8px;
+           display: block;
+           width: 100%;
+           margin-top: 1em;
+           font-family: 'Merriweather', sans-serif;
+        
+           resize: none;
+          
+          &:focus {
+            
+          }
+        }
+        
+       button {
+           color: white; 
+           background: $red;
+           cursor: pointer;
+          
+          &:hover {
+              background: lightseagreen;
+          }
+        }
+        label{
+          font-size: 25px;
+          margin-top: 0.5em;
+          border: 1px solid #a8a8a8;
+          font-family: 'Merriweather', sans-serif; 
+          resize: none;
+          border-radius: 8px;
+
+          &:hover{
+            background-color: lightseagreen;
+          }
+        }
+       
+      }
+    
+      
+      .half {
+        float: left;
+        width: 48%;
+        margin-bottom: 1em;
+      }
+      
+      .right { width: 50%; }
+      
+      .left {
+           margin-right: 2%; 
+      }
+      
+      
+      @media (max-width: 480px) {
+        .half {
+           width: 100%; 
+           float: none;
+           margin-bottom: 0; 
+        }
+      }
+      
+      
+      /* Clearfix */
+      .cf:before,
+      .cf:after {
+          content: " "; /* 1 */
+          display: table; /* 2 */
+      }
+      
+      .cf:after {
+          clear: both;
+      }  
+
+    }
+    
+  }

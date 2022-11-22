@@ -1,10 +1,10 @@
 import './App.css';
-import { CoffeeApp } from './components/CoffeeApp';
+import { Figure } from './components/Figure';
 
 function App() {
   return (
     <>
-      <CoffeeApp></CoffeeApp>
+      <Figure></Figure>
     </>
   );
 }

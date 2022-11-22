@@ -1,18 +1,2 @@
-@import url('./components/layouts/NavbarUser-Layout/components/NavBar/style.css');
-@import url('./pages/HomePage/style.css');
-@import url('./pages/HomePage/Footer/style.css');
-@import url('./pages/HomePage/ListProduct/style.css');
-@import url('./pages/DetailCoffee/style.css');
-@import url('./pages/auth/Login/style.css');
-@import url('./pages/auth/Cart/style.css');
-@import url('./pages/auth/Profile/style.css');
-@import url('./pages/auth/PurchaseHistory/style.css');
-@import url('./pages/auth/PurchaseHistory/OrderDetail/style.css');
-@import url('./pages/products/Coffee/style.css');
-@import url('./components/layouts/NabarAdmin-Layout/components/style.css');
-@import url('./pages/Admin/AdminPages/Edit/style.css');
-@import url('./pages/Admin/AdminPages/Products/ProductPage/style.css');
-@import url('./pages/Admin/AdminPages/Purchase/PurchaseLayout/style.css');
-@import url('./pages/Admin/AdminPages/Purchase/PurchasePage/style.css');
-@import url('./pages/Admin/AdminPages/Turnover/TurnoverPage/style.css');
+
 

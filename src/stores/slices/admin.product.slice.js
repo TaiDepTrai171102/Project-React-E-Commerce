@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { notification } from "antd";
 
-export const PRODUCT_LIMIT = 10;
+export const PRODUCT_LIMIT = 5;
 
 const initialState = {
   productState: {
@@ -21,7 +21,7 @@ const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    fetchProductAction: (state, action) => {
+  fetchProductAction: (state, action) => {
       const {page, limit }= action.payload;
       
       state.productState = {
@@ -34,7 +34,7 @@ const productSlice = createSlice({
         },
       };
     },
-    fetchProductActionSuccess: (state, action) => {
+  fetchProductActionSuccess: (state, action) => {
       const { data, totalProduct } = action.payload;
 
       state.productState = {
@@ -48,16 +48,16 @@ const productSlice = createSlice({
         },
       };
     },
-    fetchProductActionFailed: (state, action) => {
+  fetchProductActionFailed: (state, action) => {
       notification.error(action.payload);
     },
-    addProductAction: (state, action) => {
+  addProductAction: (state, action) => {
       state.productState = {
         loading:true,
         ...state.productState,
       }
     },
-    addProductSuccess: (state,action) => {
+  addProductSuccess: (state,action) => {
       state.productState = {
         ...state.productState,
         data: [action.payload.data,...state.productState.data],
@@ -68,34 +68,35 @@ const productSlice = createSlice({
         }
       }
     },
-    addProductFailed: (state,action) => {
+  addProductFailed: (state,action) => {
       
     },
-    updateProductAction: (state, action) => {
+  updateProductAction: (state, action) => {
       
       state.productState = {
         loading:true,
         ...state.productState,
       }
     },
-    updateProductSuccess: (state, action) => {
+  updateProductSuccess: (state, action) => {
       const productUpdate = action.payload;
       state.productState = {
+        productUpdate: productUpdate,
         ...state.productState,
         loading:false,
         
       }
     },
-    updateProductFailed: (state,action) => {
+  updateProductFailed: (state,action) => {
       
     },
-    deleteProductAction: (state, action) => {
+  deleteProductAction: (state, action) => {
       state.productState = {
         loading:true,
         ...state.productState,
       }
     },
-    deleteProductSuccess: (state, action) => {
+  deleteProductSuccess: (state, action) => {
       const newData = state.productState.data.filter(item => item !== action.payload)
       state.productState = {
         ...state.productState,
@@ -107,9 +108,28 @@ const productSlice = createSlice({
         }
       }
     },
-    deleteProductFailed: (state,action) => {
+  deleteProductFailed: (state,action) => {
       
     },
+  searchProductAction: (state, action) => {
+      const search = action.payload
+      state.productState = {
+          ...state.productState,
+          search:search,
+          loading: true
+      }
+  },
+  searchProductActionSuccess: (state, action) => {
+      const {search} = action.payload
+      state.productState = {
+          ...state.productState,
+          search,
+          loading: false
+      }
+  },
+  searchProductActionFailed: (state, action) => {
+      notification.error(action.payload)
+  }
   },
 });
 
@@ -125,7 +145,10 @@ export const {
   updateProductFailed,
   deleteProductAction,
   deleteProductSuccess,
-  deleteProductFailed
+  deleteProductFailed,
+  searchProductAction,
+  searchProductActionSuccess,
+  searchProductActionFailed
 } = productSlice.actions;
 
 export const adminProductReducer = productSlice.reducer;

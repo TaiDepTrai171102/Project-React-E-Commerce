@@ -1,18 +1,19 @@
-import { notification } from "antd";
+
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addProductAction, PRODUCT_LIMIT } from "../../../../../stores/slices/admin.product.slice";
-import {v4} from "uuid";
+import "./styleAddProduct.scss"
+import Sidebar from "../../../../../components/layouts/Sidebar";
+import Navbar from "../../../../../components/layouts/Navbar";
 function AddProducts() {
-    const [addProduct, setAddProduct] = useState(false);
     const [selectImg, setSelectImg] = useState(null);
     const [newTodoValue, setNewTodoValue] = useState({
         productName:'',
         type:'',
         price:'',
         image: '',
-        description:'',
+
         
     });
     const dispatch = useDispatch();
@@ -42,15 +43,15 @@ function AddProducts() {
         console.log(selectImg)
     };
     const addTodoProduct = (container) => {
-        if (container.productName === '' || container.type==='' || container.price === "" || container.description === '' ) return;
+        if (container.productName === '' || container.type==='' || container.price === ""  ) return;
         const newTodoList = 
             {
-                id: v4(),
+          
                 productName:container.productName,
                 type: container.type,
                 price: container.price,
                 image: container.image,
-                description: container.description,
+             
             };
         
         
@@ -63,47 +64,43 @@ function AddProducts() {
             type:'',
             price:'',
             image: '',
-            description:'',
+         
         });
-        setSelectImg('');
-        notification.success({
-            message:`Thêm thành công`
-        })
+        setSelectImg(''); 
+        navigate(`/admin/products/?page=${totalPage}&limit=${PRODUCT_LIMIT}`)
     }
-    const toggle = () => {
-        navigate(`/admin/products/all?page=${totalPage}&limit=${PRODUCT_LIMIT}`)
-    };    
-    return ( 
-        <div className="add-products">
-                <h2>Add Products <span className="close-add" onClick={toggle}>X</span></h2>
-                <p className="label-input">
-                        <label>Product Name:</label>
-                        <input className="input-product"  type= "text"name="productName" value = {newTodoValue.productName}
-                        onChange = {handleOnchange} placeholder="Title" />
-                    </p>                   
-                    <p className="label-input">
-                        <label>Type:</label>
-                        <input className="input-product" type= "text"name="type" value = {newTodoValue.type}
-                        onChange = {handleOnchange} placeholder="Type" />
-                    </p>                   
-                    <p className="label-input">
-                        <label>Price:</label>
-                        <input className="input-product" type= "text"name="price" value = {newTodoValue.price}
-                        onChange = {handleOnchange} placeholder="Price" />
-                    </p>                   
-                    <p className="label-input">
-                        <label>Description:</label>
-                        <input className="input-product" type= "text"name="description" value = {newTodoValue.description}
-                        onChange = {handleOnchange} placeholder="Description" />
-                    </p>
-                    <p className="label-input">
-                        <label className="select-img" for = "input-img">Select File:</label>
-                        <input id="input-img" hidden  type= "file" name="myImage" 
-                        onChange = {handleOnchangeFile} placeholder="" />
-                        {selectImg && <img width={'50%'} className="image" src={selectImg}/> }  
-                    </p>   
-                    <button className="save-add" onClick={hanldeSubmitTodoValue}>ADD</button>                   
+   
+    return (
+<div className="list">
+            <Sidebar />
+    <div className="listcontainer">
+            <Navbar />
+       
+        <form className="cf">
+            <h2>Add Products <span className="close-add" ></span></h2>
+            <div className="half left cf">
+                <input type="text" id="input-name" placeholder="Name" value = {newTodoValue.productName}
+                       onChange = {handleOnchange} name="productName"/>
+                <input type="email" id="input-email" placeholder="Price" value = {newTodoValue.price}
+                        onChange = {handleOnchange} name="price" />
+                <select value={newTodoValue.type} onChange= {handleOnchange} name="type">
+                    <option value="normal">Normal</option>
+                    <option value="rare">Rare</option>
+                    <option value="extremely rare">Extremely Rare</option>
+                </select>
             </div>
+            <div className="half right cf">
+                <label className="select-img" for = "input-img">Select File:</label><br></br>
+                    <input id="input-img" hidden  type= "file" name="myImage" 
+                        onChange = {handleOnchangeFile} placeholder="" />
+                        {selectImg && <img width="125px" height="125px" style={{marginTop: "15px"}} className="image" src={selectImg} alt="" /> }  
+            </div>  
+            <button onClick={hanldeSubmitTodoValue} >Submit</button>
+        </form>               
+      
+        
+    </div>
+</div>
      );
 }
 

@@ -1,18 +1,34 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import CoffeeBlue from '../../../../assets/coffee-blue.jpg';
-
-
+import Sidebar from "../../Sidebar"
+import Navbar from "../../Navbar";
+import "./style.scss";
+import Widget from "../../Widget";
+import Featured from "../../Featured";
+import Chart from "../../Chart";
+import Table from "../../Table";
 function NavBarAdmin() {
     return(
-        <div className='navbar-admin'>           
-            <img src={CoffeeBlue} alt="Logo" />  
-            <div className="navbar-a btn">
-                <NavLink to='/admin/products'>Products</NavLink>
-                <NavLink to='/admin/purchase'>Purchase</NavLink>
-                <NavLink to='/admin/turnover'>Turnover</NavLink>
-            </div>
-        </div>
+              
+<div className="home">
+    <Sidebar />
+    <div className="homeContainer">
+      <Navbar />
+      <div className="widgets">
+        <Widget type="user" />
+        <Widget type="order" />
+        <Widget type="earning" />
+        <Widget type="balance" />
+      </div>
+      <div className="charts">
+        <Featured />
+        <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
+      </div>
+      <div className="listContainer">
+        <div className="listTitle">Latest Transactions</div>
+        <Table />
+      </div>
+    </div>
+  </div>
+
     )
 }
 export default NavBarAdmin;

@@ -1,10 +1,12 @@
+
 import React from "react";
 import {  useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams,  } from "react-router-dom";
-import NavBarAdmin from "../../../../components/layouts/NabarAdmin-Layout/components/NabarAdmin";
+import Navbar from "../../../../components/layouts/Navbar";
+import Sidebar from "../../../../components/layouts/Sidebar";
 import { updateProductAction } from "../../../../stores/slices/admin.product.slice";
-
+import "./style.scss"
 
 export const LIST_ITEM = 'ITEM-PRODUCT';
 
@@ -20,8 +22,6 @@ function Edit() {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const param = useParams();
-    
-    const typelocation = newValueEdit.type;
     const handleOnchangeEdit = (e) => {
         const valueEdit = e.target.value;
         setNewValueEdit({...newValueEdit,[e.target.name]: valueEdit})
@@ -55,59 +55,40 @@ function Edit() {
     const hanldeSubmitEditValue = (e) => {
         const list = {...newValueEdit, id:param.id, image:urlImage? urlImage: location.state.image}
         dispatch(updateProductAction(list));
-        navigate(`/admin/products?page=${page_}&limit=10`)    
-    }
 
-    const hanldeReset = () => {
-        setNewValueEdit({
-            productName:'',
-            type:'',
-            price:'',
-            image: '',
-            description:'',
-        })
-    }
-    const backProducts = () => navigate(`/admin/products?page=${page_}&limit=10`);
+        navigate(`/admin/products?page=${page_}&limit=5`)    
+    }    
     const toggleImg = () => setShowImg(true);
     return (
         <>
-        <NavBarAdmin/>
-        <div className="edit">
-             <div className="edit-product">
-
-                <p className="label-input1">
-                        <label>Title:</label>
-                        <input type= "text"name="productName" value = {newValueEdit.productName}
-                        onChange = {handleOnchangeEdit} placeholder="Title" />
-                    </p>
-                    <span className="close-edit" onClick={backProducts}>X</span>                   
-                    <p className="label-input1">
-                        <label>Type:</label>
-                        <input type= "text"name="type" value = {newValueEdit.type}
-                        onChange = {handleOnchangeEdit} placeholder="Type" />
-                    </p>                   
-                    <p className="label-input1">
-                        <label>Price:</label>
-                        <input type= "text"name="price" value = {newValueEdit.price}
-                        onChange = {handleOnchangeEdit} placeholder="Price" />
-                    </p>                   
-                    <p className="label-input1">
-                        <label>Description:</label>
-                        <input type= "text"name="description"  value = {newValueEdit.description}
-                        onChange = {handleOnchangeEdit} placeholder="Description" />
-                    </p>
-                    <p className="label-input1">
-                        <label className="select-img" for = "input-img" onClick={toggleImg}>Select File:</label>
-                        {showImg ?? <span><img width={'200px'} style={{float:'right'}} src={location.state.image}/></span>}
+        <div className="list">
+            <Sidebar />
+        <div className="listcontainer">
+            <Navbar />
+            <form className="cf">
+            <h2>Edit Products <span className="close-add" ></span></h2>
+            <div className="half left cf">
+                <input type="text" id="input-name" placeholder="Name" value = {newValueEdit.productName}
+                       onChange = {handleOnchangeEdit} name="productName"/>
+                <input type="text" id="input-email" placeholder="Price" value = {newValueEdit.price}
+                        onChange = {handleOnchangeEdit} name="price" />
+               <select value={newValueEdit.type} onChange= {handleOnchangeEdit} name="type">
+                    <option value="normal">Normal</option>
+                    <option value="rare">Rare</option>
+                    <option value="extremely rare">Extremely Rare</option>
+                </select>
+            </div>
+            <div className="half right cf">
+                <label className="select-img" for = "input-img" onClick={toggleImg}>Select File:</label>
+                        {showImg ?? <span><img width={'200px'} height={'125px'}  style={{marginTop: "35px"}} src={location.state.image} alt=""/></span>}
                         <input id="input-img" hidden  type= "file" name="myImage" 
                         onChange = {handleOnchangeEditFile} placeholder="" />
-                        {urlImage && <img width={'200px'} className="image" src={urlImage}/> }  
-                    </p>
-                    <div className="on-button">
-                        <button className="reset" onClick={hanldeReset}>Reset</button>   
-                        <button className="save-add" onClick={hanldeSubmitEditValue}>Save</button>
-                    </div>
-            </div>
+                        {urlImage && <img width={'200px'} height={'125px'} className="image" src={urlImage}  style={{marginTop: "35px"}} alt=""/> }  
+            </div>  
+            <button onClick={hanldeSubmitEditValue} >Save</button>
+      
+        </form>               
+        </div>
         </div>
         </>
     )
